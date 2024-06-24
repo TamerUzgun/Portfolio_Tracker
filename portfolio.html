@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portföy Takip</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Portföy Takip</h1>
+    <h2>Portföy Durumu</h2>
+    <table>
+        <tr>
+            <th>Sembol</th>
+            <th>Pay Adedi</th>
+            <th>Alım Fiyatı TRY</th>
+            <th>Güncel Fiyat TRY</th>
+            <th>Güncel Değer TRY</th>
+            <th>Maliyet TRY</th>
+            <th>Kâr (%)</th>
+        </tr>
+        {% for stock in portfolio %}
+        <tr>
+            <td>{{ stock.symbol }}</td>
+            <td>{{ stock.quantity }}</td>
+            <td>{{ stock.purchase_price|floatformat:2 }}</td>
+            <td>{{ stock.current_price|floatformat:2 }}</td>
+            <td>{{ stock.current_value|floatformat:2 }}</td>
+            <td>{{ stock.cost|floatformat:2 }}</td>
+            <td>{{ stock.return|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Toplam Değer TRY: {{ total_value|floatformat:2 }}</h2>
+    <h2>Toplam Maliyet: {{ total_cost|floatformat:2 }}</h2>
+    <h2>Portföy Dağılımı %</h2>
+    <div>{{ plot_div|safe }}</div>
+</body>
+</html>
